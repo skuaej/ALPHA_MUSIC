@@ -6,7 +6,8 @@ from pyrogram import filters
 
 load_dotenv()
 
-API_ID = int(getenv("API_ID"))
+# Basic API Configuration
+API_ID = int(getenv("API_ID", 0)) # Added 0 default to prevent crash if missing
 API_HASH = getenv("API_HASH")
 BOT_TOKEN = getenv("BOT_TOKEN")
 
@@ -14,7 +15,10 @@ MONGO_DB_URI = getenv("MONGO_DB_URI", None)
 
 DURATION_LIMIT_MIN = int(getenv("DURATION_LIMIT", 30))
 
-LOGGER_ID = (getenv("LOGGER_ID", None))
+# Fixed LOGGER_ID to ensure it is an integer if provided
+logger_id_env = getenv("LOGGER_ID", None)
+LOGGER_ID = int(logger_id_env) if logger_id_env else None
+
 OWNER_ID = int(getenv("OWNER_ID", 7403621976))
 
 HEROKU_APP_NAME = getenv("HEROKU_APP_NAME")
@@ -32,7 +36,10 @@ AUTO_LEAVING_ASSISTANT = bool(getenv("AUTO_LEAVING_ASSISTANT", False))
 SPOTIFY_CLIENT_ID = getenv("SPOTIFY_CLIENT_ID", None)
 SPOTIFY_CLIENT_SECRET = getenv("SPOTIFY_CLIENT_SECRET", None)
 
-PLAYLIST_FETCH_LIMIT = int(getenv("PLAYLIST_FETCH_LIMIT"5int)
+# --- CRITICAL FIX BELOW ---
+# The original code had: int(getenv("PLAYLIST_FETCH_LIMIT"5int)
+# I have set a default of 25.
+PLAYLIST_FETCH_LIMIT = int(getenv("PLAYLIST_FETCH_LIMIT", 25))
 
 TG_AUDIO_FILESIZE_LIMIT = int(getenv("TG_AUDIO_FILESIZE_LIMIT", 104857600))
 TG_VIDEO_FILESIZE_LIMIT = int(getenv("TG_VIDEO_FILESIZE_LIMIT", 1073741824))
